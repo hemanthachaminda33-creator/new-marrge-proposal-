@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marry Me - ඔබගේ ජීවිත සහකරුවා සොයාගන්න</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans Sinhala', 'Iskoola Pota', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #fdf6f0;
+        }
+
+        /* Hero Section with Cover Photo */
+        .hero {
+            position: relative;
+            height: 100vh;
+            min-height: 600px;
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.4)), 
+                        url('https://images.unsplash.com/photo-1519741497674-611481863552?w=1920&q=80') center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            padding: 20px;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        .hero-subtitle {
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.7);
+            font-weight: 500;
+        }
+
+        .hero-text-overlay {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(5px);
+            border: 2px solid rgba(255,255,255,0.2);
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4);
+            margin-top: 20px;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(231, 76, 60, 0.6);
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255,255,255,0.95);
+            padding: 15px 50px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #e74c3c;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #e74c3c;
+        }
+
+        /* Sections */
+        section {
+            padding: 80px 50px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            color: #2c3e50;
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: #e74c3c;
+            margin: 15px auto;
+            border-radius: 2px;
+        }
+
+        /* About Section */
+        .about {
+            background: white;
+            border-radius: 20px;
+            padding: 60px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .about p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #555;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .stat-item {
+            padding: 30px;
+            background: #fdf6f0;
+            border-radius: 15px;
+            border: 2px solid #f0e6dc;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            color: #e74c3c;
+            font-weight: bold;
+        }
+
+        .stat-label {
+            color: #666;
+            margin-top: 10px;
+        }
+
+        /* Profiles Section */
+        .profiles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .profile-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .profile-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .profile-img {
+            height: 250px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 4rem;
+        }
+
+        .profile-info {
+            padding: 25px;
+        }
+
+        .profile-info h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .profile-info p {
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .view-btn {
+            display: inline-block;
+            padding: 10px 25px;
+            background: #e74c3c;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-size: 0.9rem;
+        }
+
+        /* Success Stories */
+        .stories {
+            background: white;
+            border-radius: 20px;
+            padding: 60px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .story-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .story-card {
+            text-align: center;
+            padding: 30px;
+            background: #fdf6f0;
+            border-radius: 15px;
+            position: relative;
+        }
+
+        .story-card::before {
+            content: '"';
+            font-size: 4rem;
+            color: #e74c3c;
+            opacity: 0.3;
+            position: absolute;
+            top: 10px;
+            left: 20px;
+        }
+
+        .couple-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+        }
+
+        .story-text {
+            font-style: italic;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .couple-name {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            text-align: center;
+            border-radius: 20px;
+            padding: 80px 40px;
+        }
+
+        .cta-section h2 {
+            color: white;
+        }
+
+        .cta-section h2::after {
+            background: white;
+        }
+
+        .cta-section p {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            opacity: 0.95;
+        }
+
+        .white-btn {
+            background: white;
+            color: #e74c3c;
+            padding: 18px 50px;
+            font-size: 1.3rem;
+        }
+
+        .white-btn:hover {
+            background: #f8f9fa;
+        }
+
+        /* Footer */
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 40px;
+            margin-top: 80px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+            section {
+                padding: 50px 20px;
+            }
+            nav {
+                padding: 15px 20px;
+            }
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">❤️ Marry Me</div>
+        <ul class="nav-links">
+            <li><a href="#home">මුල් පිටුව</a></li>
+            <li><a href="#about">අපි ගැන</a></li>
+            <li><a href="#profiles">පැතිකඩ</a></li>
+            <li><a href="#stories">කතා</a></li>
+            <li><a href="#contact">සම්බන්ධ වන්න</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section with New Cover Photo Text -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <div class="hero-text-overlay">
+                <h1>ඔබගේ සහකරු/සහක්කාරිය සොයාගන්න</h1>
+                <p class="hero-subtitle">ඔබගේ ස්වයංවර යෝජනාව ඩිජිටල් අවකාශය මත කැටපත් කරන්න</p>
+                <a href="#profiles" class="cta-button">දැන්ම සොයන්න</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <h2>ආදරයේ කතා ආරම්භ වන්නේ මෙහිදී</h2>
+        <div class="about">
+            <p>වසර දහයකට වඩා වැඩි කාලයක් අපි නිහතමානී කප්පිටුන් ලෙස ක්‍රියා කරමින්, අසංඛ්‍යාත ආදර කතා ගොඩනැගීමට දායක වී ඇත්තෙමු. අද දිනයේදීත් අපි ශ්‍රී ලංකාවේ විශ්වාසවන්තම විවාහ යෝජනා සේවාව ලෙස ක්‍රියා කරමින්, සතුටුම සාමාජිකයින් 50,000කට වඩා වැඩි පිරිසකට සේවය සපයමු.</p>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number">10+</div>
+                    <div class="stat-label">වසර වූ අත්දැකීම</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">50,000+</div>
+                    <div class="stat-label">සතුටු සාමාජිකයින්</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">5,000+</div>
+                    <div class="stat-label">සාර්ථක විවාහ</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">විශ්වසනීයත්වය</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Profiles Section -->
+    <section id="profiles">
+        <h2>ඔබගේ සහකරු/සහකාරිය සොයන්න</h2>
+        <p style="text-align: center; margin-bottom: 40px; color: #666;">අපගේ සාමාජිකයින්ගේ පැතිකඩ පරීක්ෂා කර, ඔබට සුදුසුම ගැළපීම සොයාගන්න</p>
+        
+        <div class="profiles-grid">
+            <div class="profile-card">
+                <div class="profile-img">👤</div>
+                <div class="profile-info">
+                    <h3>සම්පත් පෙරේරා</h3>
+                    <p>වයස: 28 | රැකියාව: මෘදුකාංග ඉංජිනේරු</p>
+                    <a href="#" class="view-btn">පැතිකඩ බලන්න</a>
+                </div>
+            </div>
+            <div class="profile-card">
+                <div class="profile-img">👤</div>
+                <div class="profile-info">
+                    <h3>නදීශානි සිල්වා</h3>
+                    <p>වයස: 26 | රැකියාව: වෛද්‍ය</p>
+                    <a href="#" class="view-btn">පැතිකඩ බලන්න</a>
+                </div>
+            </div>
+            <div class="profile-card">
+                <div class="profile-img">👤</div>
+                <div class="profile-info">
+                    <h3>කසුන් රත්නායක</h3>
+                    <p>වයස: 30 | රැකියාව: ව්‍යාපාරික</p>
+                    <a href="#" class="view-btn">පැතිකඩ බලන්න</a>
+                </div>
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 40px;">
+            <a href="#" class="cta-button">සියලුම පැතිකඩ බලන්න</a>
+        </div>
+    </section>
+
+    <!-- Success Stories -->
+    <section id="stories">
+        <div class="stories">
+            <h2>සැබෑ ආදරය, සැබෑ සතුට</h2>
+            <p style="text-align: center; color: #666; margin-bottom: 30px;">අපගේ වේදිකාව මගින් ඔවුන්ගේ ජීවිත සහකරු/සහකාරිය සොයාගත් සතුටු යුවළවල්</p>
+            
+            <div class="story-grid">
+                <div class="story-card">
+                    <div class="couple-img">💑</div>
+                    <p class="story-text">"Marry Me වේදිකාවෙන් අපි අද ඉතාමත් සතුටින් ජීවත් වෙනවා. අපගේ ගැළපීම PERFECT එකක්!"</p>
+                    <p class="couple-name">- තුෂාර & චමිලා</p>
+                </div>
+                <div class="story-card">
+                    <div class="couple-img">💑</div>
+                    <p class="story-text">"පළමු දිනයේදීම අපි දෙදෙනා එකිනෙකාට ආදරය කළා. දැන් අපි විවාහ වෙලා වසර 2ක්."</p>
+                    <p class="couple-name">- නිමල් & සඳමාලි</p>
+                </div>
+                <div class="story-card">
+                    <div class="couple-img">💑</div>
+                    <p class="story-text">"මෙම සේවාවෙන් මම මගේ ජීවිතයේ ආදරය සොයාගත්තා. ඔබටත් හැකියි!"</p>
+                    <p class="couple-name">- අමිල & රුවිනි</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="contact">
+        <div class="cta-section">
+            <h2>ඔබගේ සදහටම සොයාගැනීමට සූදානම්ද?</h2>
+            <p>දහස්ගණනක් සතුටු යුවළවල් ඔවුන්ගේ ආදරය සොයාගත්තේ මෙහිදීය. අදම ඔබගේ යෝජනාව එවන්න.</p>
+            <a href="#" class="cta-button white-btn">නොමිලේ ලියාපදිංචි වන්න</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Marry Me. සියලු හිමිකම් ඇවිරිණි. ❤️</p>
+        <p>ශ්‍රී ලංකාවේ විශ්වාසවන්තම විවාහ යෝජනා සේවාව</p>
+    </footer>
+
+</body>
+</html>
